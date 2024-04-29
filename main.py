@@ -28,10 +28,34 @@ print(sheet_data)
 #     trial = requests.put(url="https://api.sheety.co/ce03a24dd7107449001e616b7fe7ac4c/flightDeals/prices/1",headers=header,params=running_parameters)
 #     print(trial.content)
 
-running_parameters = {
-        "price":{
-            "IATA Code": "PRS"
-        }
+
+
+url = 'https://api.sheety.co/ce03a24dd7107449001e616b7fe7ac4c/flightDeals/prices'
+body = {
+    "price": {
+        "City": "hello"
     }
-trial = requests.put(url="https://api.sheety.co/ce03a24dd7107449001e616b7fe7ac4c/flightDeals/prices/2",headers=header,json=running_parameters)
-print(trial.content)
+}
+
+# response = requests.put(url, json=body,headers=header)
+#
+# if response.status_code == 200:
+#     json_data = response.json()
+#     # Do something with the JSON object
+#     print(json_data['price'])
+#     print(response.text)
+# else:
+#     print("Error:", response.status_code)
+
+for city in sheet_data:
+            new_data = {
+                "price": {
+                    "iataCode": "hello"
+                }
+            }
+            response = requests.put(
+                url=f"{url}/{city['id']}",
+                headers=header,
+                json=new_data
+            )
+            print(response.content)
