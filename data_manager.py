@@ -8,6 +8,7 @@ header = {
 class DataManager:
     def __init__(self):
         self.destination_data = {}
+        self.get_sheet_data()
         self.update_iataCode()
 
     def get_sheet_data(self):
@@ -16,11 +17,18 @@ class DataManager:
             headers=header
         )
         sheet_data = sheet_data_response.json()
-        print()
+        self.destination_data = sheet_data["prices"]
+        print(self.destination_data)
     def update_iataCode(self):
-
-        response = requests.put(
-            url=f"{SHEETY_API_ENDPOINT}",
-            headers=header
-        )
-
+        for city in self.destination_data:
+            new_data = {
+                "price": {
+                    "iataCode": "hejo"
+                }
+            }
+            response = requests.put(
+                url=f"{SHEETY_API_ENDPOINT}/{city['id']}",
+                headers=header,
+                json=new_data
+            )
+            print(response.content)

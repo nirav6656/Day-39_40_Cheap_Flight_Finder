@@ -3,7 +3,7 @@ import requests
 import os
 from flight_search import FlightSearch
 from pprint import pprint
-
+from data_manager import DataManager
 
 # header = {
 #     "Authorization": AUTHORIZATION
@@ -26,18 +26,14 @@ from pprint import pprint
 
 
 
-# for city in sheet_data:
-#             new_data = {
-#                 "price": {
-#                     "iataCode": "hello"
-#                 }
-#             }
-#             response = requests.put(
-#                 url=f"{url}/{city['id']}",
-#                 headers=header,
-#                 json=new_data
-#             )
-#             print(response.content)
 
-
+#
+# datamanager = DataManager()
+#
 flight_search = FlightSearch()
+
+
+
+
+
+
