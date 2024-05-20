@@ -1,34 +1,36 @@
+from pprint import pprint
 import requests
-import os
-SHEETY_API_ENDPOINT = os.environ["SHEETY_API_ENDPOINT"]
-AUTHORIZATION = os.environ["AUTHORIZATION"]
-header = {
-    "Authorization": AUTHORIZATION
-}
+
+SHEETY_PRICES_ENDPOINT = YOUR SHEETY PRICES ENDPOINT
+SHEETY_USERS_ENDPOINT = YOUR SHEETY USERS ENDPOINT
+
 class DataManager:
+
     def __init__(self):
         self.destination_data = {}
-        self.get_sheet_data()
-        self.update_iataCode()
 
-    def get_sheet_data(self):
-        sheet_data_response = requests.get(
-            url=f"{SHEETY_API_ENDPOINT}",
-            headers=header
-        )
-        sheet_data = sheet_data_response.json()
-        self.destination_data = sheet_data["prices"]
-        print(self.destination_data)
-    def update_iataCode(self):
+    def get_destination_data(self):
+        response = requests.get(url=SHEETY_PRICES_ENDPOINT)
+        data = response.json()
+        self.destination_data = data["prices"]
+        return self.destination_data
+
+    def update_destination_codes(self):
         for city in self.destination_data:
             new_data = {
                 "price": {
-                    "iataCode": "hejo"
+                    "iataCode": city["iataCode"]
                 }
             }
             response = requests.put(
-                url=f"{SHEETY_API_ENDPOINT}/{city['id']}",
-                headers=header,
+                url=f"{SHEETY_PRICES_ENDPOINT}/{city['id']}",
                 json=new_data
             )
-            print(response.content)
+            print(response.text)
+
+    def get_customer_emails(self):
+        customers_endpoint = SHEETY_USERS_ENDPOINT
+        response = requests.get(url=customers_endpoint)
+        data = response.json()
+        self.customer_data = data["users"]
+        return self.customer_data
